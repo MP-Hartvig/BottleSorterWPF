@@ -8,7 +8,7 @@ namespace BottleSorterWPF
 {
     public class BottleEventArgs : EventArgs
     {
-        Bottle Bottle { get; set; }
+        public Bottle Bottle { get; set; }
 
         public BottleEventArgs(Bottle bottle)
         {

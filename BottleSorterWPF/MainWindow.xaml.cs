@@ -29,17 +29,17 @@ namespace BottleSorterWPF
         {
             InitializeComponent();
 
-            Thread t = new Thread(mana.GenerateBottle);
+            //Thread t = new Thread(mana.GenerateBottle);
 
-            t.Start();
+            //t.Start();
 
-            mana.bottleHandlerEvent += Mana_bottleHandlerEvent;
+            //mana.bottleHandlerEvent += Mana_bottleHandlerEvent;
         }
 
-        private void Mana_bottleHandlerEvent(object? sender, EventArgs e)
-        {
-            Debug.WriteLine("Bottle received");
-        }
+        //private void Mana_bottleHandlerEvent(object? sender, BottleEventArgs e)
+        //{
+        //    Dispatcher.Invoke(() => { Label1.Content = e.Bottle.Type.ToString(); });            
+        //}
 
         private void SingleBottle_Click(object sender, RoutedEventArgs e)
         {
@@ -48,7 +48,18 @@ namespace BottleSorterWPF
 
         private void MultipleBottles_Click(object sender, RoutedEventArgs e)
         {
+            int bottleCount = 0;
 
+            while (bottleCount <= 10)
+            {
+                var horizontalAlignment = bottleBelt.TranslatePoint;
+                var verticalAlignment = bottleBelt.VerticalAlignment;
+
+
+
+                bottleCount++;
+                Thread.Sleep(2500);
+            }
         }
 
         private void SodaCounter_TextChanged(object sender, TextChangedEventArgs e)

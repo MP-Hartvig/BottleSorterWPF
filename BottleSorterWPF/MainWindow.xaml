@@ -8,9 +8,9 @@
         Title="MainWindow" Height="600" Width="800">
     <Grid>
         
-        <Rectangle Fill="LightGray" Height="80" Width="400" HorizontalAlignment="Left" Margin="50,0,0,0" />
-        
-        <Rectangle Fill="LightGray" Height="50" Width="200" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Margin="0,0,200,175" >
+        <Rectangle x:Name="bottleBelt" Fill="LightGray" Height="80" Width="400" HorizontalAlignment="Left" Margin="50,0,0,0" />
+
+        <Rectangle x:Name="sodaBelt" Fill="LightGray" Height="50" Width="200" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Margin="0,0,200,175" >
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -20,8 +20,8 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        
-        <Rectangle Fill="LightGray" Height="50" Width="200" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Margin="0,175,200,0" >
+
+        <Rectangle x:Name="beerBelt" Fill="LightGray" Height="50" Width="200" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Margin="0,175,200,0" >
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -113,6 +113,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
         </Grid>
+        <Label x:Name="Label1" Content="Label" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top"/>
 
         <!--<Button Height="30" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">Test animation
             <Button.Background>

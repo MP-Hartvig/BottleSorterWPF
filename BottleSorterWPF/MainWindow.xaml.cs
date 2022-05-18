@@ -1,7 +1,10 @@
-﻿using System;
+﻿using BottleSorterWPF.Assets;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +23,22 @@ namespace BottleSorterWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        Manager mana = new Manager();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Thread t = new Thread(mana.GenerateBottle);
+
+            t.Start();
+
+            mana.bottleHandlerEvent += Mana_bottleHandlerEvent;
+        }
+
+        private void Mana_bottleHandlerEvent(object? sender, EventArgs e)
+        {
+            Debug.WriteLine("Bottle received");
         }
 
         private void SingleBottle_Click(object sender, RoutedEventArgs e)
@@ -31,6 +47,16 @@ namespace BottleSorterWPF
         }
 
         private void MultipleBottles_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SodaCounter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void BeerCounter_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

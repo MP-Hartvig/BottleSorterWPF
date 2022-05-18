@@ -113,7 +113,8 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
         </Grid>
-        <Label x:Name="Label1" Content="Label" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top"/>
+        
+        <!--<Image x:Name="BottleImage" Grid.Row="2"-->
 
         <!--<Button Height="30" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">Test animation
             <Button.Background>

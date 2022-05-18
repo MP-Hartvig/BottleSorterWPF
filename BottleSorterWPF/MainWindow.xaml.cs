@@ -50,16 +50,16 @@ namespace BottleSorterWPF
         {
             int bottleCount = 0;
 
-            while (bottleCount <= 10)
-            {
-                var horizontalAlignment = bottleBelt.TranslatePoint;
-                var verticalAlignment = bottleBelt.VerticalAlignment;
+            //while (bottleCount < 10)
+            //{
+            //    var horizontalAlignment = bottleBelt.TranslatePoint;
+            //    var verticalAlignment = bottleBelt.VerticalAlignment;
 
 
 
-                bottleCount++;
-                Thread.Sleep(2500);
-            }
+            //    bottleCount++;
+            //    Thread.Sleep(2500);
+            //}
         }
 
         private void SodaCounter_TextChanged(object sender, TextChangedEventArgs e)

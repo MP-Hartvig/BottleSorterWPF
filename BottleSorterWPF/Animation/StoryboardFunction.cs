@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace BottleSorterWPF.Animation
@@ -18,21 +20,48 @@ namespace BottleSorterWPF.Animation
         private static double verticalEndpointTop;
         private static double verticalEndpointBottom;
 
-        public static void AddSlideFromLeftToTopRight(this Storyboard storyboard, float seconds)
+        public static void AddSlideFromLeftToCenterToTopRight(this Storyboard storyboard, Image target, float seconds)
         {
-            ThicknessAnimation? animation = new ThicknessAnimation
-            {
-                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(horizontalOffset, verticalOffset, horizontalEndpoint, verticalEndpointTop), // Left - Top - Right - Bottom
-                To = new Thickness(0)
-            };
+            // First part of the animation
+            Vector offset = VisualTreeHelper.GetOffset(target);
+            var top = offset.Y;
+            var left = offset.X;
 
-            Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+            TranslateTransform trans = new TranslateTransform();
+            target.RenderTransform = trans;
 
-            storyboard.Children.Add(animation);
+            DoubleAnimation anim1 = new DoubleAnimation(0, 245 - top, TimeSpan.FromSeconds(2));
+            DoubleAnimation anim2 = new DoubleAnimation(0, 400 - left, TimeSpan.FromSeconds(2));
+
+            trans.BeginAnimation(TranslateTransform.YProperty, anim1);
+            trans.BeginAnimation(TranslateTransform.XProperty, anim2);
+
+            //anim1.Completed += new EventHandler(Anim1_Completed());
+
+            //ThicknessAnimation? animation = new ThicknessAnimation
+            //{
+            //    Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+            //    From = new Thickness(horizontalOffset, verticalOffset, horizontalEndpoint, verticalEndpointTop), // Left - Top - Right - Bottom
+            //    To = new Thickness(0)
+            //};
+
+            //Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+
+            //storyboard.Children.Add(animation);
         }
 
-        public static void AddSlideFromLeftToBottomRight(this Storyboard storyboard, float seconds)
+        private static void Anim1_Completed(object sender, EventArgs e)
+        {
+            DoubleAnimation anim1 = new DoubleAnimation(0, 245, TimeSpan.FromSeconds(2));
+            DoubleAnimation anim2 = new DoubleAnimation(0, 400, TimeSpan.FromSeconds(2));
+
+            TranslateTransform trans = new TranslateTransform();
+
+            trans.BeginAnimation(TranslateTransform.YProperty, anim1);
+            trans.BeginAnimation(TranslateTransform.XProperty, anim2);
+        }
+
+        public static void AddSlideFromLeftToCenterToBottomRight(this Storyboard storyboard, float seconds)
         {
             ThicknessAnimation? animation = new ThicknessAnimation
             {

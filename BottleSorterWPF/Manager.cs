@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BottleSorterWPF.Animation;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,22 +11,27 @@ namespace BottleSorterWPF.Assets
 {
     public class Manager
     {
-        public event EventHandler<BottleEventArgs> bottleHandlerEvent;
-
-        // This triggers by receiving a bottle
-        public void BottleAdded(Bottle bottle)
+        public void Test()
         {
-            bottleHandlerEvent?.Invoke(this, new BottleEventArgs(bottle));
+            //SodaAnimation.SlideFromLeftToCenterToTopRight();
         }
 
-        public void GenerateBottle()
-        {
-            while (true)
-            {
-                BottleAdded(new Bottle());
-                Debug.WriteLine("Bottle was generated");
-                Thread.Sleep(3000);
-            }
-        }
+        //public event EventHandler<BottleEventArgs> bottleHandlerEvent;
+
+        //// This triggers by receiving a bottle
+        //public void BottleAdded(Bottle bottle)
+        //{
+        //    bottleHandlerEvent?.Invoke(this, new BottleEventArgs(bottle));
+        //}
+
+        //public void GenerateBottle()
+        //{
+        //    while (true)
+        //    {
+        //        BottleAdded(new Bottle());
+        //        Debug.WriteLine("Bottle was generated");
+        //        Thread.Sleep(3000);
+        //    }
+        //}
     }
 }

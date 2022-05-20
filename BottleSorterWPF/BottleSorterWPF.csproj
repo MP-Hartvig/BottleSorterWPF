@@ -11,4 +11,9 @@
     <None Remove="Assets\SingleBottle.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dequeue\" />
+    <Folder Include="Enqueue\" />
+  </ItemGroup>
+
 </Project>

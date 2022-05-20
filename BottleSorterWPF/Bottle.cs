@@ -47,20 +47,20 @@ namespace BottleSorterWPF
             Debug.WriteLine($"{Type} created");
         }
 
-        public Task BeerAnimation()
-        {
-            Storyboard sb = new Storyboard();
-            var slideAnimation = new ThicknessAnimation { 
-                Duration = new Duration(new TimeSpan(this.SlideSeconds)), 
-                From = new Thickness(),
-                To = new Thickness(),
+        //public Task BeerBottleAnimation()
+        //{
+        //    Storyboard sb = new Storyboard();
+        //    var slideAnimation = new ThicknessAnimation { 
+        //        Duration = new Duration(new TimeSpan(this.SlideSeconds)), 
+        //        From = new Thickness(),
+        //        To = new Thickness(),
                 
-            };
-        }
+        //    };
+        //}
 
-        public Task SodaAnimation()
-        {
-            Storyboard sb = new Storyboard();
-        }
+        //public Task SodaBottleAnimation()
+        //{
+        //    Storyboard sb = new Storyboard();
+        //}
     }
 }

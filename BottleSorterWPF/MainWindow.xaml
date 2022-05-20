@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
     <Grid>
-        
+
         <Rectangle x:Name="bottleBelt" Fill="LightGray" Height="80" Width="400" HorizontalAlignment="Left" Margin="50,0,0,0" />
 
         <Rectangle x:Name="sodaBelt" Fill="LightGray" Height="50" Width="200" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Margin="0,0,200,175" >
@@ -31,7 +31,7 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        
+
         <Button x:Name="SingleBottle" Content="Produce single bottle" HorizontalAlignment="Left" Margin="50,0,0,200" VerticalAlignment="Stretch" Width="150" Height="30" Foreground="White" Click="SingleBottle_Click">
             <Button.Background>
                 <SolidColorBrush x:Name="singleBottleBrush" Color="#FF4B4B4B"/>
@@ -44,10 +44,11 @@
                             <ColorAnimation Storyboard.TargetName="singleBottleBrush" Storyboard.TargetProperty="Color" From="Green" To="#FF4B4B4B" Duration="0:0:1"/>
                         </Storyboard>
                     </BeginStoryboard>
+                    
                 </EventTrigger>
             </Button.Triggers>
         </Button>
-        
+
         <Button x:Name="MultipleBottles" Content="Produce multiple bottles" HorizontalAlignment="Left" Margin="50,200,0,0" VerticalAlignment="Stretch" Width="150" Height="30" Foreground="White" Click="MultipleBottles_Click">
             <Button.Background>
                 <SolidColorBrush x:Name="multipleBottleBrush" Color="#FF4B4B4B"/>
@@ -66,10 +67,10 @@
 
         <TextBlock HorizontalAlignment="Right" Margin="0,50,50,0" TextWrapping="Wrap" Text="Soda count" VerticalAlignment="Top" TextAlignment="Center" Background="#FF4B4B4B" Foreground="White" Width="80" Height="20"/>
         <TextBlock HorizontalAlignment="Right" Margin="0,0,50,140" TextWrapping="Wrap" Text="Beer count" VerticalAlignment="Bottom" TextAlignment="Center" Background="#FF4B4B4B" Foreground="White" Width="80" Height="20"/>
-        
+
         <TextBox x:Name="SodaCounter" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" Height="30" Margin="0,75,75,0" Background="#FF4B4B4B" Foreground="White" TextChanged="SodaCounter_TextChanged"/>
         <TextBox x:Name="BeerCounter" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="30" Height="30" Margin="0,0,75,105" Background="#FF4B4B4B" Foreground="White" TextChanged="BeerCounter_TextChanged"/>
-        
+
         <Grid x:Name="BeerBox" Width="100" Height="60" Margin="0,370,155,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Grid.Row="5" Grid.Column="2" Background="#FF4B4B4B">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -91,7 +92,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
         </Grid>
-        
+
         <Grid x:Name="SodaBox" Width="100" Height="60" Margin="0,0,155,375" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Grid.Row="5" Grid.Column="2" Background="#FF4B4B4B">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -113,26 +114,12 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
         </Grid>
-        
-        <!--<Image x:Name="BottleImage" Grid.Row="2"-->
 
-        <!--<Button Height="30" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">Test animation
-            <Button.Background>
-                <SolidColorBrush x:Name="myAnimatedBrush" Color="LightGray" />
-            </Button.Background>
-            <Button.Triggers>
-                <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <ColorAnimation 
-                  Storyboard.TargetName="myAnimatedBrush"
-                  Storyboard.TargetProperty="Color"
-                  From="Red" To="Blue" Duration="0:0:2" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Button.Triggers>
-        </Button>-->
+        <Image x:Name="BottleImage" Margin="75" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="0" Height="70" Width="50" Source="C:\Users\mpp\Desktop\H2\WPF\BottleSorterWPF\BottleSorterWPF\Assets\Bottle.png">
+            <!--<Image.RenderTransform>
+                <TranslateTransform X="200" Y="100"/>
+            </Image.RenderTransform>-->
+        </Image>
 
     </Grid>
 </Window>

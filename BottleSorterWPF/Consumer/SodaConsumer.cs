@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BottleSorterWPF.Consumer
 {
+    // This class dequeues the soda queue
     class SodaConsumer
     {
         Queue<Bottle> sodas;
@@ -25,10 +26,10 @@ namespace BottleSorterWPF.Consumer
                 {
                     Monitor.TryEnter(sodas);
 
-                    if (sodas.Count == 0)
-                    {
-                        Monitor.Wait(sodas);
-                    }
+                    //if (sodas.Count == 0)
+                    //{
+                    //    Monitor.Wait(sodas);
+                    //}
 
                     Bottle bottle = sodas.Dequeue();
                     Debug.WriteLine($"{bottle.Type + " " + bottle.Id} has been consumed");

@@ -30,6 +30,8 @@ namespace BottleSorterWPF
         {
             InitializeComponent();
 
+            mana.InitializeThreads();
+
             //Thread t = new Thread(mana.GenerateBottle);
 
             //t.Start();

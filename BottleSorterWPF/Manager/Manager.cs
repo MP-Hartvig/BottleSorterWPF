@@ -12,42 +12,90 @@ namespace BottleSorterWPF.Assets
 {
     public class Manager
     {
-        public void InitializeThreads()
+        static Queue<Bottle> BottleFactoryQueue = new Queue<Bottle>();
+        static Queue<Bottle> BeerConsumerQueue = new Queue<Bottle>();
+        static Queue<Bottle> SodaConsumerQueue = new Queue<Bottle>();
+
+        BottleFactory bf = new BottleFactory(BottleFactoryQueue);
+        Sorter sort = new Sorter(BottleFactoryQueue, BeerConsumerQueue, SodaConsumerQueue);
+        BeerConsumer bc = new BeerConsumer(BeerConsumerQueue);
+        SodaConsumer sc = new SodaConsumer(SodaConsumerQueue);
+
+        public int CountSodaQueue()
         {
-            Queue<Bottle> bpQueue = new Queue<Bottle>();
-            Queue<Bottle> bcQueue = new Queue<Bottle>();
-            Queue<Bottle> scQueue = new Queue<Bottle>();
-
-            BottleFactory bp = new BottleFactory(bpQueue);
-            Sorter split = new Sorter(bpQueue, bcQueue, scQueue);
-            BeerConsumer bc = new BeerConsumer(bcQueue);
-            SodaConsumer sc = new SodaConsumer(scQueue);
-
-            Thread produceSingle = new Thread(bp.ProduceSingleBottle);
-            Thread produceMultiple = new Thread(bp.ProduceMultipleBottles);
-            Thread splitter = new Thread(split.SplitBottles);
-            Thread beerConsumer = new Thread(bc.ConsumeBeer);
-            Thread sodaConsumer = new Thread(sc.ConsumeSoda);
-
-            try
-            {
-                produceSingle.Start();
-                produceMultiple.Start();
-                splitter.Start();
-                sodaConsumer.Start();
-                beerConsumer.Start();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-
-            //produceSingle.Join();
-            //produceMultiple.Join();
-            //splitter.Join();
-            //sodaConsumer.Join();
-            //beerConsumer.Join();
+            return SodaConsumerQueue.Count;
         }
+
+        public int CountBeerQueue()
+        {
+            return BeerConsumerQueue.Count;
+        }
+
+        public void ProduceSingleBottle()
+        {
+            Bottle bottle = bf.ProduceSingleBottle();
+        }
+
+        public void ProduceMultipleBottles()
+        {
+            Bottle[] bottles = bf.ProduceMultipleBottles();
+        }
+
+        public void SortBottle()
+        {            
+            sort.SortBottles();
+        }
+
+        public void ConsumeBeerBox()
+        {
+            bc.ConsumeBeer();
+        }
+
+        public void ConsumeSodaBox()
+        {
+            sc.ConsumeSoda();
+        }
+
+        //public event EventHandler<BottleEventArgs> bottleHandlerEvent;
+        //public event EventHandler<BottlesEventArgs> bottlesHandlerEvent;
+
+        //public void AddBottle(Bottle bottle)
+        //{
+        //    bottleHandlerEvent.Invoke(this, new BottleEventArgs(bottle));
+        //}
+
+        //public void AddBottles(Bottle[] bottles)
+        //{
+        //    bottlesHandlerEvent.Invoke(this, new BottlesEventArgs(bottles));
+        //}
+
+        //public Bottle GetCurrentBottle()
+        //{
+        //    Bottle bottleInfo;
+
+        //    if (Monitor.TryEnter(BottleFactoryQueue))
+        //    {
+        //        if (BottleFactoryQueue.Count == 0)
+        //        {
+        //            Monitor.Wait(BottleFactoryQueue);
+        //        }
+
+        //        try
+        //        {                    
+        //            return bottleInfo = BottleFactoryQueue.Peek();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Debug.WriteLine(ex);
+        //        }
+        //        finally
+        //        {
+        //            Monitor.PulseAll(BottleFactoryQueue);
+        //            Monitor.Exit(BottleFactoryQueue);
+        //        }
+        //    }
+        //    return bottleInfo;
+        //}
 
         //private int id = 0;
 

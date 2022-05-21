@@ -8,25 +8,23 @@ using System.Threading.Tasks;
 
 namespace BottleSorterWPF.Producer
 {
+    // This class generates bottles to a queue
     class BottleFactory
     {
-        Queue<Bottle> bottles;
+        Queue<Bottle> Bottles;
 
-        public BottleFactory(Queue<Bottle> bottleQueue)
+        public BottleFactory(Queue<Bottle> bottles)
         {
-            bottles = bottleQueue;
+            Bottles = bottles;
         }
 
-        int bottleId = 1;
-
-        public void ProduceSingleBottle()
+        public Bottle ProduceSingleBottle()
         {
-            if (Monitor.TryEnter(bottles))
+            if (Monitor.TryEnter(Bottles))
             {
                 try
                 {
-                    bottles.Enqueue(new Bottle(bottleId));
-                    bottleId++;
+                    Bottles.Enqueue(new Bottle());
                 }
                 catch (Exception ex)
                 {
@@ -34,24 +32,25 @@ namespace BottleSorterWPF.Producer
                 }
                 finally
                 {
-                    Monitor.PulseAll(bottles);
-                    Monitor.Exit(bottles);
+                    Monitor.PulseAll(Bottles);
+                    Monitor.Exit(Bottles);
                 }
             }
+            return Bottles.Peek();
         }
 
-        public void ProduceMultipleBottles()
+        public Bottle[] ProduceMultipleBottles()
         {
-            int maxAmount = 0;
+            Bottle[] bottles = new Bottle[10];
 
-            if (Monitor.TryEnter(bottles))
+            if (Monitor.TryEnter(Bottles))
             {
-                while (maxAmount < 10)
+                for (int i = 0; i < bottles.Length; i++)
                 {
                     try
                     {
-                        bottles.Enqueue(new Bottle(bottleId));
-                        bottleId++;
+                        Bottles.Enqueue(new Bottle());
+                        bottles[i] = Bottles.Peek();
                     }
                     catch (Exception ex)
                     {
@@ -59,12 +58,12 @@ namespace BottleSorterWPF.Producer
                     }
                     finally
                     {
-                        Monitor.PulseAll(bottles);
-                        Monitor.Exit(bottles);
+                        Monitor.PulseAll(Bottles);
+                        Monitor.Exit(Bottles);
                     }
-                    Thread.Sleep(100 / 15);
                 }
             }
+            return bottles;
         }
     }
 }

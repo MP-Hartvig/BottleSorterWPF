@@ -1,4 +1,5 @@
 ﻿using BottleSorterWPF.Assets;
+using BottleSorterWPF.Enum;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,43 +30,34 @@ namespace BottleSorterWPF
         public MainWindow()
         {
             InitializeComponent();
+        }
 
-            mana.InitializeThreads();
+        private void SingleBottle_Click(object sender, RoutedEventArgs e)
+        {
+            Thread produceSingle = new Thread(mana.ProduceSingleBottle);
+            Thread sorter = new Thread(mana.SortBottle);
+            Thread sConsumer = new Thread(mana.ConsumeSodaBox);
+            Thread bConsumer = new Thread(mana.ConsumeBeerBox);
 
-            //Thread t = new Thread(mana.GenerateBottle);
+            BottleImage.Opacity = 1;
 
-            //t.Start();
+            produceSingle.Start();
+            sorter.Start();
+            sConsumer.Start();
+            bConsumer.Start();
+
+            MoveToCenter();
 
             //mana.bottleHandlerEvent += Mana_bottleHandlerEvent;
         }
 
         //private void Mana_bottleHandlerEvent(object? sender, BottleEventArgs e)
         //{
-        //    Dispatcher.Invoke(() => { Label1.Content = e.Bottle.Type.ToString(); });            
+        //    Dispatcher.Invoke(() => { SodaCounter.Text = e.Bottle.Type.ToString(); });
         //}
-
-        private void SingleBottle_Click(object sender, RoutedEventArgs e)
-        {
-            BottleImage.Opacity = 1;
-
-            // Needs X and Y coordinates
-            MoveToCenter(BottleImage);
-        }
 
         private void MultipleBottles_Click(object sender, RoutedEventArgs e)
         {
-            //int bottleCount = 0;
-
-            //while (bottleCount < 10)
-            //{
-            //    var horizontalAlignment = bottleBelt.TranslatePoint;
-            //    var verticalAlignment = bottleBelt.VerticalAlignment;
-
-
-
-            //    bottleCount++;
-            //    Thread.Sleep(2500);
-            //}
         }
 
         private void SodaCounter_TextChanged(object sender, TextChangedEventArgs e)
@@ -78,14 +70,14 @@ namespace BottleSorterWPF
 
         }
 
-        public void MoveToCenter(Image target)
+        public void MoveToCenter()
         {
-            Vector offset = VisualTreeHelper.GetOffset(target);
+            Vector offset = VisualTreeHelper.GetOffset(BottleImage);
             var top = offset.Y;
             var left = offset.X;
 
             TranslateTransform trans = new TranslateTransform();
-            target.RenderTransform = trans;
+            BottleImage.RenderTransform = trans;
 
             DoubleAnimation anim1 = new DoubleAnimation(0, 245 - top, TimeSpan.FromSeconds(2));
             DoubleAnimation anim2 = new DoubleAnimation(0, 400 - left, TimeSpan.FromSeconds(2));
@@ -98,11 +90,14 @@ namespace BottleSorterWPF
 
         public void Anim1_Completed(object sender, EventArgs e)
         {
+            //Bottle bottleType;
+
+            //// Perform check on bottle type, choose animation thereafter
+            //bottleType = mana.GetCurrentBottle();
+
             Random random = new Random();
 
-            // Perform check on bottle type, choose animation thereafter
-
-            if (random.Next(2) == 0)
+            if (random.Next(1, 3) == 1)
             {
                 MoveToTopRight(BottleImage);
             }
@@ -126,6 +121,15 @@ namespace BottleSorterWPF
 
             trans.BeginAnimation(TranslateTransform.YProperty, anim1);
             trans.BeginAnimation(TranslateTransform.XProperty, anim2);
+
+            SetSodaCount();
+        }
+
+        public void SetSodaCount()
+        {
+            int sodaQueueCount = mana.CountSodaQueue();
+
+            SodaCounter.Text = sodaQueueCount.ToString();
         }
 
         public void MoveToBottomRight(Image target)
@@ -142,6 +146,15 @@ namespace BottleSorterWPF
 
             trans.BeginAnimation(TranslateTransform.YProperty, anim1);
             trans.BeginAnimation(TranslateTransform.XProperty, anim2);
+
+            SetBeerCount();
+        }
+
+        public void SetBeerCount()
+        {
+            int beerQueueCount = mana.CountBeerQueue();
+
+            BeerCounter.Text = beerQueueCount.ToString();
         }
     }
 }

@@ -11,33 +11,42 @@ namespace BottleSorterWPF.Consumer
     // This class dequeues the beer queue
     class BeerConsumer
     {
-        Queue<Bottle> beers;
+        Queue<Bottle> Beers;
 
-        public BeerConsumer(Queue<Bottle> beerQueue)
+        public BeerConsumer(Queue<Bottle> beers)
         {
-            beers = beerQueue;
+            Beers = beers;
         }
+
+        int id = 1;
 
         public void ConsumeBeer()
         {
-            if (beers.Count == 9)
+            while (Beers.Count <= 10)
             {
-                while (beers.Count != 0)
+                if (Beers.Count == 10)
                 {
-                    Monitor.TryEnter(beers);
-
-                    //if (beers.Count == 0)
-                    //{
-                    //    Monitor.Wait(beers);
-                    //}
-
-                    Bottle bottle = beers.Dequeue();
-                    Debug.WriteLine($"{bottle.Type} {bottle.Id} has been consumed");
-
-                    Monitor.Pulse(beers);
-                    Monitor.Exit(beers);
-
-                    Thread.Sleep(100 / 15);
+                    while (Beers.Count != 0)
+                    {
+                        if (Monitor.TryEnter(Beers))
+                        {
+                            try
+                            {
+                                Bottle bottle = Beers.Dequeue();
+                                Debug.WriteLine($"{bottle.Type} {id} has been consumed");
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex);
+                            }
+                            finally
+                            {
+                                Monitor.Pulse(Beers);
+                                Monitor.Exit(Beers);
+                            }
+                        }
+                        Thread.Sleep(100 / 15);
+                    }
                 }
             }
         }

@@ -23,8 +23,10 @@ namespace BottleSorterWPF.Producer
             Bottles = bottleQueue;
         }
 
-        public void SplitBottles()
+        public void SortBottles()
         {
+            Thread.Sleep(100);
+
             while (Bottles.Count > 0)
             {
                 if (Monitor.TryEnter(Bottles))
@@ -68,7 +70,7 @@ namespace BottleSorterWPF.Producer
                 try
                 {
                     Beers.Enqueue(enqueueBottle);
-                    Debug.WriteLine($"{enqueueBottle.Type} {enqueueBottle.Id} was relocated to beer queue");
+                    Debug.WriteLine($"{enqueueBottle.Type} was relocated");
                 }
                 catch (Exception)
                 {
@@ -90,7 +92,7 @@ namespace BottleSorterWPF.Producer
                 try
                 {
                     Sodas.Enqueue(enqueueBottle);
-                    Debug.WriteLine($"{enqueueBottle.Type} {enqueueBottle.Id} was relocated to beer queue");
+                    Debug.WriteLine($"{enqueueBottle.Type} was relocated");
                 }
                 catch (Exception ex)
                 {

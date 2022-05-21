@@ -13,27 +13,18 @@ namespace BottleSorterWPF
     public class Bottle
     {
         #region Bottle properties
-        private int id;
         private BottleType type;
-
-        public int Id
-        {
-            get => id;
-            set => id = value;
-        }
 
         public BottleType Type
         {
             get => type;
-            set => type = value;
         }
         #endregion
 
         Random random = new Random();
 
-        public Bottle(int bottleId)
+        public Bottle()
         {
-            id = bottleId;
             type = (BottleType)random.Next(1, 3);
             Debug.WriteLine($"{Type} created");
         }

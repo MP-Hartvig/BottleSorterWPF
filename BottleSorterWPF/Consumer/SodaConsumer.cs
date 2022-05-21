@@ -11,33 +11,43 @@ namespace BottleSorterWPF.Consumer
     // This class dequeues the soda queue
     class SodaConsumer
     {
-        Queue<Bottle> sodas;
+        Queue<Bottle> Sodas;
 
-        public SodaConsumer(Queue<Bottle> sodaQueue)
+        public SodaConsumer(Queue<Bottle> sodas)
         {
-            sodas = sodaQueue;
+            Sodas = sodas;
         }
+
+        int id = 1;
 
         public void ConsumeSoda()
         {
-            if (sodas.Count == 10)
+            while (Sodas.Count <= 10)
             {
-                while (sodas.Count != 0)
+                if (Sodas.Count == 10)
                 {
-                    Monitor.TryEnter(sodas);
-
-                    //if (sodas.Count == 0)
-                    //{
-                    //    Monitor.Wait(sodas);
-                    //}
-
-                    Bottle bottle = sodas.Dequeue();
-                    Debug.WriteLine($"{bottle.Type + " " + bottle.Id} has been consumed");
-
-                    Monitor.Pulse(sodas);
-                    Monitor.Exit(sodas);
-
-                    Thread.Sleep(100 / 15);
+                    while (Sodas.Count != 0)
+                    {
+                        if (Monitor.TryEnter(Sodas))
+                        {
+                            try
+                            {
+                                Bottle bottle = Sodas.Dequeue();
+                                Debug.WriteLine($"{bottle.Type} {id} has been consumed");
+                                id++;
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex);
+                            }
+                            finally
+                            {
+                                Monitor.Pulse(Sodas);
+                                Monitor.Exit(Sodas);
+                            }
+                        }
+                        Thread.Sleep(100 / 15);
+                    }
                 }
             }
         }

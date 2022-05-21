@@ -8,12 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\SingleBottle.jpg" />
+    <Compile Remove="Dequeue\**" />
+    <Compile Remove="Enqueue\**" />
+    <EmbeddedResource Remove="Dequeue\**" />
+    <EmbeddedResource Remove="Enqueue\**" />
+    <None Remove="Dequeue\**" />
+    <None Remove="Enqueue\**" />
+    <Page Remove="Dequeue\**" />
+    <Page Remove="Enqueue\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dequeue\" />
-    <Folder Include="Enqueue\" />
+    <None Remove="Assets\SingleBottle.jpg" />
   </ItemGroup>
 
 </Project>

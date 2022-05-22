@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace BottleSorterWPF.Producer
 {
-    // This class generates bottles to a queue
-    class BottleFactory
+    /// <summary>
+    /// This class generates bottles to a queue
+    /// </summary>
+    public class BottleFactory
     {
+        public event EventHandler<BottleEventArgs> BottleCreated;
+
         Queue<Bottle> Bottles;
 
         public BottleFactory(Queue<Bottle> bottles)
@@ -18,39 +22,25 @@ namespace BottleSorterWPF.Producer
             Bottles = bottles;
         }
 
-        public Bottle ProduceSingleBottle()
+        public void BottleCreatedEvent(Bottle bottle)
         {
-            if (Monitor.TryEnter(Bottles))
-            {
-                try
-                {
-                    Bottles.Enqueue(new Bottle());
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-                finally
-                {
-                    Monitor.PulseAll(Bottles);
-                    Monitor.Exit(Bottles);
-                }
-            }
-            return Bottles.Peek();
+            BottleCreated?.Invoke(this, new BottleEventArgs(bottle));
         }
 
-        public Bottle[] ProduceMultipleBottles()
+        public void ProduceSingleBottle()
         {
-            Bottle[] bottles = new Bottle[10];
+            Bottle bottle = null!;
 
-            if (Monitor.TryEnter(Bottles))
+            while (bottle is null)
             {
-                for (int i = 0; i < bottles.Length; i++)
+                if (Monitor.TryEnter(Bottles))
                 {
+                    bottle = new Bottle();
+
                     try
                     {
-                        Bottles.Enqueue(new Bottle());
-                        bottles[i] = Bottles.Peek();
+                        Bottles.Enqueue(bottle);                        
+                        BottleCreatedEvent(bottle);
                     }
                     catch (Exception ex)
                     {
@@ -63,7 +53,6 @@ namespace BottleSorterWPF.Producer
                     }
                 }
             }
-            return bottles;
         }
     }
 }

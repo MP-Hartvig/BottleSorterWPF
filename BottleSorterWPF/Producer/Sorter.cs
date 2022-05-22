@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace BottleSorterWPF.Producer
 {
-    // This class sorts bottles into seperate queues
+    /// <summary>
+    /// This class sorts bottles into seperate queues
+    /// </summary>
     class Sorter
     {
         Queue<Bottle> Bottles;
@@ -25,8 +27,6 @@ namespace BottleSorterWPF.Producer
 
         public void SortBottles()
         {
-            Thread.Sleep(100);
-
             while (Bottles.Count > 0)
             {
                 if (Monitor.TryEnter(Bottles))

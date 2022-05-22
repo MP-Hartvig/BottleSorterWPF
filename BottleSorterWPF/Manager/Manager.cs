@@ -12,18 +12,19 @@ namespace BottleSorterWPF.Assets
 {
     public class Manager
     {
+        public BottleFactory BottleF { get; private set; }
+
         static Queue<Bottle> BottleFactoryQueue = new Queue<Bottle>();
         static Queue<Bottle> BeerConsumerQueue = new Queue<Bottle>();
         static Queue<Bottle> SodaConsumerQueue = new Queue<Bottle>();
 
-        BottleFactory bf = new BottleFactory(BottleFactoryQueue);
         Sorter sort = new Sorter(BottleFactoryQueue, BeerConsumerQueue, SodaConsumerQueue);
         BeerConsumer bc = new BeerConsumer(BeerConsumerQueue);
         SodaConsumer sc = new SodaConsumer(SodaConsumerQueue);
 
-        public int CountSodaQueue()
+        public Manager()
         {
-            return SodaConsumerQueue.Count;
+            BottleF = new BottleFactory(BottleFactoryQueue);
         }
 
         public int CountBeerQueue()
@@ -33,12 +34,7 @@ namespace BottleSorterWPF.Assets
 
         public void ProduceSingleBottle()
         {
-            Bottle bottle = bf.ProduceSingleBottle();
-        }
-
-        public void ProduceMultipleBottles()
-        {
-            Bottle[] bottles = bf.ProduceMultipleBottles();
+            BottleF.ProduceSingleBottle();
         }
 
         public void SortBottle()
@@ -55,54 +51,5 @@ namespace BottleSorterWPF.Assets
         {
             sc.ConsumeSoda();
         }
-
-        //public event EventHandler<BottleEventArgs> bottleHandlerEvent;
-        //public event EventHandler<BottlesEventArgs> bottlesHandlerEvent;
-
-        //public void AddBottle(Bottle bottle)
-        //{
-        //    bottleHandlerEvent.Invoke(this, new BottleEventArgs(bottle));
-        //}
-
-        //public void AddBottles(Bottle[] bottles)
-        //{
-        //    bottlesHandlerEvent.Invoke(this, new BottlesEventArgs(bottles));
-        //}
-
-        //public Bottle GetCurrentBottle()
-        //{
-        //    Bottle bottleInfo;
-
-        //    if (Monitor.TryEnter(BottleFactoryQueue))
-        //    {
-        //        if (BottleFactoryQueue.Count == 0)
-        //        {
-        //            Monitor.Wait(BottleFactoryQueue);
-        //        }
-
-        //        try
-        //        {                    
-        //            return bottleInfo = BottleFactoryQueue.Peek();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Debug.WriteLine(ex);
-        //        }
-        //        finally
-        //        {
-        //            Monitor.PulseAll(BottleFactoryQueue);
-        //            Monitor.Exit(BottleFactoryQueue);
-        //        }
-        //    }
-        //    return bottleInfo;
-        //}
-
-        //private int id = 0;
-
-        //public void Test()
-        //{
-        //    Bottle bottle = new Bottle(id);
-
-        //}
     }
 }

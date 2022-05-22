@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace BottleSorterWPF.Consumer
 {
-    // This class dequeues the beer queue
+    /// <summary>
+    /// This class dequeues the beer queue when the box is full
+    /// </summary>
     class BeerConsumer
     {
         Queue<Bottle> Beers;

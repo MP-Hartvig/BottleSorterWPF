@@ -10,6 +10,9 @@ using System.Windows.Media.Animation;
 
 namespace BottleSorterWPF
 {
+    /// <summary>
+    /// This class represents a bottle with an enum type property
+    /// </summary>
     public class Bottle
     {
         #region Bottle properties
